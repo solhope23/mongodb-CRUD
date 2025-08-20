@@ -4,9 +4,9 @@ from pymongo import MongoClient, errors
 from dotenv import load_dotenv
 
 load_dotenv()
-MONGODB_URI = os.getenv("MONGODB_URI")
-DB_NAME = os.getenv("DB_NAME", "data")
-COLLECTION_NAME = os.getenv("COLLECTION_NAME", "people")
+MONGODB_URI = os.getenv("MONGODB_URI", "localhost:27017")
+DB_NAME = os.getenv("DB_NAME", "enemy_soldiers")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "soldier_details")
 
 ALLOWED_FIELDS = {"first_name", "last_name", "phone_number", "rank"}
 
@@ -18,10 +18,17 @@ class DAL:
         self.client = MongoClient(uri)
         self.db = self.client[db_name]
         self.col = self.db[collection]
-        self.col.create_index("id", unique=True)
+        self.col.create_index("soldier_id", unique=True)
 
 
     def close(self) -> None:
         self.client.close()
+
+
+    def read_all(self) -> List[Dict[str, Any]]:
+        cursor = self.col.find({}, {"_id": 0})
+        return list(cursor)
+
+
 
 
