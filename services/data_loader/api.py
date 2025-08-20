@@ -10,6 +10,13 @@ class MyAPI:
 
     def _routes_listener(self) -> None:
 
+        @self.app.get("/health")
+        def health():
+            return {"status": "ok"}
+
+
+
+
 
 
 
