@@ -15,6 +15,12 @@ class MyAPI:
             return {"status": "ok"}
 
 
+        @self.app.get("/get_all")
+        def get_all():
+            return {"all_docs" : self.dal.read_all()}
+
+
+
 
 
 
