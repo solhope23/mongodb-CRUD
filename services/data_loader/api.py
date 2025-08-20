@@ -30,6 +30,20 @@ class MyAPI:
                 return {"message": e, "status" : "error"}
 
 
+        @self.app.put("/update")
+        def update_doc(update_object : bm_object.UpdateSoldierField):
+            try:
+                self.dal.update(update_object.__dict__)
+                return {"message": f"updated field {update_object.field} in soldier id - {update_object.soldier_ID} successfully", "status" : "succeeded"}
+            except Exception as e:
+                return {"message": e, "status": "error"}
+
+
+
+
+
+
+
 
 
 
