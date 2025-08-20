@@ -48,7 +48,6 @@ class DAL:
             return False
 
 
-
     def update(self, soldier_id: int, field: str, value: str) -> bool:
         if field not in ALLOWED_FIELDS:
             return False
