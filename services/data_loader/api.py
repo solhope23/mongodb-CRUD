@@ -39,6 +39,17 @@ class MyAPI:
                 return {"message": e, "status": "error"}
 
 
+        @self.app.delete("/delete")
+        def delete_doc(id_doc : bm_object.DeleteSoldier):
+            try:
+                self.dal.update(id_doc.__dict__)
+                return {"message": f"deleted soldier id - {id_doc.soldier_ID}", "status" : "succeeded"}
+            except Exception as e:
+                return {"message": e, "status": "error"}
+
+
+
+
 
 
 
