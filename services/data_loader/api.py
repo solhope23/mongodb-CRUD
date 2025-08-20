@@ -48,6 +48,14 @@ class MyAPI:
                 return {"message": e, "status": "error"}
 
 
+        @self.app.delete("/clear_all")
+        def delete_doc():
+            try:
+                self.dal.clear_all()
+                return {"message": "deleted all docs", "status": "succeeded"}
+            except Exception as e:
+                return {"message": e, "status": "error"}
+
 
 
 
