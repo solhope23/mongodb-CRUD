@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 import base_model_objects as bm_object
+from dal import DAL
 
 class MyAPI:
 
-    def __init__(self, dal):
+    def __init__(self, dal : DAL):
         self.dal = dal
         self.app = FastAPI()
         self._routes_listener()
@@ -24,7 +25,7 @@ class MyAPI:
         @self.app.post("/insert")
         def add_doc(doc : bm_object.Soldier):
             try:
-                self.dal.write(doc.__dict__)
+                self.dal.write(**doc.__dict__)
                 return {"message": f"inserted soldier {doc.first_name}, {doc.last_name}, with id {doc.soldier_ID} into the collection {self.dal.col}", "status" : "succeeded"}
             except Exception as e:
                 return {"message": e, "status" : "error"}
@@ -33,7 +34,7 @@ class MyAPI:
         @self.app.put("/update")
         def update_doc(update_object : bm_object.UpdateSoldierField):
             try:
-                self.dal.update(update_object.__dict__)
+                self.dal.update(**update_object.__dict__)
                 return {"message": f"updated field {update_object.field} in soldier id - {update_object.soldier_ID} successfully", "status" : "succeeded"}
             except Exception as e:
                 return {"message": e, "status": "error"}
@@ -42,7 +43,7 @@ class MyAPI:
         @self.app.delete("/delete")
         def delete_doc(id_doc : bm_object.DeleteSoldier):
             try:
-                self.dal.delete(id_doc.__dict__)
+                self.dal.delete(**id_doc.__dict__)
                 return {"message": f"deleted soldier id - {id_doc.soldier_ID}", "status" : "succeeded"}
             except Exception as e:
                 return {"message": e, "status": "error"}

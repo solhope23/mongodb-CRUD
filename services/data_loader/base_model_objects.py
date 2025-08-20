@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+import uvicorn
 
 class Soldier(BaseModel):
 
