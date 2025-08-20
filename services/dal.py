@@ -55,4 +55,11 @@ class DAL:
         res = self.col.update_one({"soldier_id": soldier_id}, {"$set": {field: value.strip()}})
         return res.matched_count == 1
 
+    def delete(self, soldier_id: int) -> bool:
+        res = self.col.delete_one({"soldier_id": soldier_id})
+        return res.deleted_count == 1
 
+    def clear_all(self) -> int:
+        """Delete all records from the collection. Returns count of deleted records."""
+        res = self.col.delete_many({})
+        return res.deleted_count
